@@ -17,19 +17,14 @@ const googleProvider = new GoogleAuthProvider();
 const useFirebase = () => {
   // state
   const [user, setUser] = useState({});
-  const [error, setError] = useState({});
+  // const [error, setError] = useState({});
 
   // firebase auth
   const auth = getAuth();
 
   // google login Method
   const signInWithGoogle = () => {
-    signInWithPopup(auth, googleProvider)
-      .then((result) => {
-        console.log(result.user);
-        setUser(result.user);
-      })
-      .catch((error) => setError(error.message));
+    return signInWithPopup(auth, googleProvider);
   };
 
   // logout method
@@ -50,7 +45,6 @@ const useFirebase = () => {
 
   return {
     user,
-    error,
     logOut,
     signInWithGoogle,
   };

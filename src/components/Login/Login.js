@@ -1,12 +1,20 @@
 import React from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useHistory } from "react-router-dom";
 import useAuth from "../../context/useAuth";
 import "./Login.css";
 
 const Login = () => {
   const { signInWithGoogle } = useAuth();
   const location = useLocation();
-  console.log("came from", location.state?.from);
+  const history = useHistory();
+  const redirect_uri = location.state?.from || "/shop";
+
+  // google login event
+  const handleGoogleLogin = () => {
+    signInWithGoogle().then((result) => {
+      history.push(redirect_uri);
+    });
+  };
 
   return (
     <div className="login-form">
@@ -23,7 +31,7 @@ const Login = () => {
           New to Ema-john? <Link to="/register">Create Account</Link>
         </p>
         <div>----------Or----------</div>
-        <button onClick={signInWithGoogle} className="btn-regular">
+        <button onClick={handleGoogleLogin} className="btn-regular">
           Google Sign In
         </button>
       </div>
